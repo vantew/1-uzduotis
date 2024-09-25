@@ -5,7 +5,8 @@
 #include <string>
 #include <vector>
 #include <iomanip>
-#include <algorithm> // del std::sort
+#include <algorithm>
+#include <limits>
 
 using std::endl;
 using std::cout;
@@ -18,5 +19,7 @@ using std::left;
 using std::fixed;
 using std::sort;
 using std::rand;
+using std::numeric_limits;
+using std::streamsize;
 
 #endif // MYLIB_H_INCLUDED

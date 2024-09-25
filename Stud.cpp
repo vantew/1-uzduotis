@@ -4,7 +4,7 @@ void input(Stud &Lok, int hwCount) {
     cout << "Input student's name and surname: " << endl;
     cin >> Lok.name >> Lok.surname;
 
-    double hwSum = 0;  // To calculate homework total sum
+    double hwSum = 0;
     int hw;
 
     cout << "Enter the homework grades for " << "\033[1;3m" << Lok.name << " " << Lok.surname << "\033[0m: " << endl;
@@ -19,7 +19,6 @@ void input(Stud &Lok, int hwCount) {
                 Lok.HW.push_back(hw);
                 }
             }
-          // Add to total homework sum
     }
     cout << "Enter the exam grade: " << endl;
     int m = 1;
@@ -32,10 +31,10 @@ void input(Stud &Lok, int hwCount) {
     }
 
     Lok.HW.push_back(Lok.exam);
-    Lok.med = calculateMedian(Lok.HW);  // Calculate median
+    Lok.med = calculateMedian(Lok.HW);
     Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
 }
-}
+
 
 void inputgrades(Stud &Lok) {
     cout << "Input student's name and surname: " << endl;
@@ -74,7 +73,7 @@ void inputgrades(Stud &Lok) {
     }
 
     Lok.HW.push_back(Lok.exam);
-    Lok.med = calculateMedian(Lok.HW);  // Calculate median
+    Lok.med = calculateMedian(Lok.HW);
     Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
 }
 
@@ -87,14 +86,14 @@ void randomgrades(Stud &Lok, int hwCount) {
     cout << Lok.name << " " << Lok.surname << " grades are: ";
 
     for (int i = 0; i < hwCount; i++) {
-        int hw = (rand() % 10) + 1; // Generate grade between 1 and 10
+        hw = (rand() % 10) + 1;
         Lok.HW.push_back(hw);
         hwSum += hw;
         cout << hw << " ";
     }
-    cout << endl;
-    Lok.exam = (rand() % 10) + 1; // Generate grade between 1 and 10
+    Lok.exam = (rand() % 10) + 1;
     Lok.HW.push_back(Lok.exam);
+    cout << "; Exam grade: " << Lok.exam << endl;
 
     Lok.med = calculateMedian(Lok.HW);
     Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
@@ -138,6 +137,13 @@ void outputmed(Stud Lok) {
     cout << left << setw(12) << Lok.surname
          << setw(12) << Lok.name
          << setw(8) << fixed << setprecision(2) << Lok.med << endl;
+}
+
+void outputnull() {
+    cout << left << setw(12) << "Surname"
+         << setw(12) << "Name"
+         << setw(8) << "Average" << endl;
+    cout << string(12 + 12 + 8, '-') << endl;
 }
 
 void clean(Stud &Lok) {

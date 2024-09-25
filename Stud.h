@@ -14,6 +14,7 @@ void inputgrades(Stud &Lok);
 void randomgrades(Stud &Lok, int hwCount);
 void outputavg(Stud Lok);
 void outputmed(Stud Lok);
+void outputnull();
 void clean(Stud &Lok);
 void printHeaderavg();
 void printHeadermed();

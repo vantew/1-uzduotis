@@ -1,112 +1,152 @@
 #include "Mylib.h"
 #include "Stud.h"
 
+
 int main() {
     vector<Stud> Vec1;
     Stud Temp;
 
-    cout << "How many students?" << endl;
     int n;
-    cin >> n;
+    while (true) {
+        cout << "How many students? " << endl;
+        cin >> n;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            cout << "Invalid input. Please enter a number." << endl;
+        }
+        else if (n > 0) {
+            break;
+        }
+        else {
+            cout << "Invalid input. Please enter a positive number." << endl;
+        }
+    }
 
     char hw;
 
 while (true) {
-    cout << "Do you know the number of homework assignments per student? (y/n):" << endl;
-    cin >> hw;
+        do {
+            cout << "Do you know the number of homework assignments per student? (y/n):" << endl;
+            cin >> hw;
 
-    if (hw == 'y' || hw == 'Y') {
-        cout << "Enter the number of assignments: " << endl;
-        int hwCount;
-        cin >> hwCount;
+            if (hw != 'y' && hw != 'Y' && hw != 'n' && hw != 'N') {
+                cout << "Invalid input. Please enter 'y' or 'n'." << endl;
+            }
+        } while (hw != 'y' && hw != 'Y' && hw != 'n' && hw != 'N');
 
-        while (true) {
-            cout << "Do you want to generate random grades? (y/n): " << endl;
+        if (hw == 'y' || hw == 'Y') {
+            int hwCount;
+            while (true) {
+                cout << "Enter the number of assignments: " << endl;
+
+                cin >> hwCount;
+
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+                    cout << "Invalid input. Please enter a number." << endl;
+                }
+                else if (hwCount < 0) cout << "Enter a positive number." <<endl;
+                    else break;
+            }
+
             char random;
-            cin >> random;
+            do {
+                cout << "Do you want to generate random grades? (y/n): " << endl;
+                cin >> random;
 
-            if (random == 'y' || random == 'Y') {
-                for (int i = 0; i < n; i++) {
-                    randomgrades(Temp, hwCount); // Generate random grades
-                    Vec1.push_back(Temp); // Store in vector
-                    clean(Temp); // Clean the temporary structure
+                if (random != 'y' && random != 'Y' && random != 'n' && random != 'N') {
+                    cout << "Invalid input. Please enter 'y' or 'n'." << endl;
                 }
-                break; // Exit the inner while loop after processing random grades
-            }
-            else if (random == 'n' || random == 'N') {
+            } while (random != 'y' && random != 'Y' && random != 'n' && random != 'N');
+
+            if (random == 'y' || random == 'Y') { // sugeneruoja random grades
                 for (int i = 0; i < n; i++) {
-                    input(Temp, hwCount); // Input data manually
-                    Vec1.push_back(Temp); // Store in vector
-                    clean(Temp); // Clean the temporary structure
+                    randomgrades(Temp, hwCount);
+                    Vec1.push_back(Temp);
+                    clean(Temp);
                 }
-                break; // Exit the inner while loop after processing homework data
             }
-            else {
-                cout << "Invalid input." << endl; // Handle invalid input
+            else if (random == 'n' || random == 'N') { // suvedam grades, zinodami hwCount
+                for (int i = 0; i < n; i++) {
+                    input(Temp, hwCount);
+                    Vec1.push_back(Temp);
+                    clean(Temp);
+                }
             }
+            break;
         }
-        break; // Exit the outer loop after processing either random or manual grades
-    }
-    else if (hw == 'n' || hw == 'N') {
-        for (int i = 0; i < n; i++) {
-            inputgrades(Temp); // Input grades without homework count
-            Vec1.push_back(Temp); // Store in vector
-            clean(Temp); // Clean the temporary structure
+
+        else if (hw == 'n' || hw == 'N') { // suvedam grases, nezinodami hwCount
+            for (int i = 0; i < n; i++) {
+                inputgrades(Temp);
+                Vec1.push_back(Temp);
+                clean(Temp);
+            }
+            break;
         }
-        break; // Exit the outer loop after processing student data
     }
-    else {
-        cout << "Invalid input." << endl;
-    }
-}
 
 int option;
 
 do {
-    cout << "Choose option: 1 to view average, 2 to view median: " <<endl;
-    cin >> option;
+        cout << "Choose option: 1 to view average, 2 to view median: " << endl;
 
-    if (option == 1) {
-        printHeaderavg();
-        for (Stud student : Vec1) {
-            outputavg(student);
+        cin >> option;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number." << endl;
+            continue;
         }
 
-        cout << "Do you want to view the Median as well? (y/n): " <<endl;;
-        char viewMedian;
-        cin >> viewMedian;
-
-        if (viewMedian == 'y' || viewMedian == 'Y') {
-            printHeadermed();
-            for (Stud student : Vec1) {
-                outputmed(student);
-            }
-        }
-    }
-
-    else if (option == 2) {
-        printHeadermed();
-        for (Stud student : Vec1) {
-            outputmed(student);
-        }
-
-        cout << "Do you want to view the Average as well? (y/n): ";
-        char viewAverage;
-        cin >> viewAverage;
-
-        if (viewAverage == 'y' || viewAverage == 'Y') {
+        if (option == 1) {
             printHeaderavg();
             for (Stud student : Vec1) {
                 outputavg(student);
             }
-        }
-    }
-    else {
-        cout << "Invalid option! Please try again." << endl;
-    }
 
-}
-while (option != 1 && option != 2); // Continue looping until a valid option is chosen
+            char viewMedian;
+            do {
+                cout << "Do you want to view the Median as well? (y/n): " << endl;
+                cin >> viewMedian;
+                if (viewMedian == 'y' || viewMedian == 'Y') {
+                    printHeadermed();
+                    for (Stud student : Vec1) {
+                        outputmed(student);
+                    }
+                } else if (viewMedian != 'n' && viewMedian != 'N') {
+                    cout << "Invalid input. Please enter 'y' or 'n'." << endl;
+                }
+            } while (viewMedian != 'y' && viewMedian != 'Y' && viewMedian != 'n' && viewMedian != 'N');
+        } else if (option == 2) {
+            printHeadermed();
+            for (Stud student : Vec1) {
+                outputmed(student);
+            }
+
+            char viewAverage;
+            do {
+                cout << "Do you want to view the Average as well? (y/n): " << endl;
+                cin >> viewAverage;
+                if (viewAverage == 'y' || viewAverage == 'Y') {
+                    printHeaderavg();
+                    for (Stud student : Vec1) {
+                        outputavg(student);
+                    }
+                } else if (viewAverage != 'n' && viewAverage != 'N') {
+                    cout << "Invalid input. Please enter 'y' or 'n'." << endl;
+                }
+            } while (viewAverage != 'y' && viewAverage != 'Y' && viewAverage != 'n' && viewAverage != 'N');
+        } else {
+            cout << "Invalid option! Please try again." << endl;
+        }
+
+    } while (option != 1 && option != 2);
 
 system("pause");
 }
