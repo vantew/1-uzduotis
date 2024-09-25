@@ -45,31 +45,40 @@ void inputgrades(Stud &Lok) {
     int hwCount = 0;
 
     cout << "Enter the homework grades for \033[1;3m" << Lok.name << " "
-    << Lok.surname << "\033[0m, when you are done, type 0." << endl;
+         << Lok.surname << "\033[0m, when you are done, type 0." << endl;
+
     while (true) {
         cin >> hw;
-
-        if (hw == 0) {
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input! Try again." << endl;
+        }
+        else if (hw == 0) {
             break;
         }
-        else if ((hw < 1) || (hw > 10)) {
-            cout << "Invalid number! Try again." <<endl;
-            }
-            else {
-                hwSum += hw;
-                hwCount++;
-                Lok.HW.push_back(hw);
-            }
+        else if (hw < 1 || hw > 10) {
+            cout << "Invalid number! Try again." << endl;
+        }
+        else {
+            hwSum += hw;
+            hwCount++;
+            Lok.HW.push_back(hw);
+        }
     }
 
     cout << "Enter the exam grade: " << endl;
-    int m = 1;
-    for (int i = 0; i < m; i++) {
+    while (true) {
         cin >> Lok.exam;
-        if ((Lok.exam < 1) || (Lok.exam > 10)) {
-            cout << "Invalid number! Try again." <<endl;
-            i--;
-            }
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input! Try again." << endl;
+        }
+        else if (Lok.exam < 1 || Lok.exam > 10) {
+            cout << "Invalid number! Try again." << endl;
+        }
+        else break;
     }
 
     Lok.HW.push_back(Lok.exam);
@@ -127,6 +136,14 @@ void printHeadermed() {
     cout << string(12 + 12 + 8, '-') << endl;
 }
 
+void inputnull(Stud &Lok) {
+    cout << "Input student's name and surname: " << endl;
+    cin >> Lok.name >> Lok.surname;
+
+    Lok.med = 0;
+    Lok.avg = 0;
+}
+
 void outputavg(Stud Lok) {
     cout << left << setw(12) << Lok.surname
          << setw(12) << Lok.name
@@ -137,13 +154,6 @@ void outputmed(Stud Lok) {
     cout << left << setw(12) << Lok.surname
          << setw(12) << Lok.name
          << setw(8) << fixed << setprecision(2) << Lok.med << endl;
-}
-
-void outputnull() {
-    cout << left << setw(12) << "Surname"
-         << setw(12) << "Name"
-         << setw(8) << "Average" << endl;
-    cout << string(12 + 12 + 8, '-') << endl;
 }
 
 void clean(Stud &Lok) {

@@ -51,6 +51,14 @@ while (true) {
                     cout << "Invalid input. Please enter a number." << endl;
                 }
                 else if (hwCount < 0) cout << "Enter a positive number." <<endl;
+
+                    else if (hwCount == 0) {/////////////////////////////////
+                        for (int i = 0; i < n; i++) {
+                            inputnull(Temp);
+                        }////////////////////////////////////
+
+                        break;
+                    }
                     else break;
             }
 
