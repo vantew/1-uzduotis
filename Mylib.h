@@ -8,6 +8,10 @@
 #include <algorithm>
 #include <limits>
 
+#include <fstream>
+#include <sstream>
+#include <numeric>
+
 using std::endl;
 using std::cout;
 using std::cin;

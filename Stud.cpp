@@ -136,13 +136,13 @@ void printHeadermed() {
     cout << string(12 + 12 + 8, '-') << endl;
 }
 
-void inputnull(Stud &Lok) {
+void inputnull(Stud &Lok) {/////////////////////////////////////
     cout << "Input student's name and surname: " << endl;
     cin >> Lok.name >> Lok.surname;
 
     Lok.med = 0;
     Lok.avg = 0;
-}
+}/////////////////////////////////////////////
 
 void outputavg(Stud Lok) {
     cout << left << setw(12) << Lok.surname
