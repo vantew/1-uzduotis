@@ -17,5 +17,6 @@ using std::setprecision;
 using std::left;
 using std::fixed;
 using std::sort;
+using std::rand;
 
 #endif // MYLIB_H_INCLUDED

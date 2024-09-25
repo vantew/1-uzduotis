@@ -12,15 +12,16 @@ int main() {
     char hw;
 
 while (true) {
-        cout << "Do you know the number of homework assignments per student? (y/n):" << endl;
-        cin >> hw;
+    cout << "Do you know the number of homework assignments per student? (y/n):" << endl;
+    cin >> hw;
 
-        if (hw == 'y' || hw == 'Y') {
-            cout << "Enter the number of assignments: " << endl;
-            int hwCount;
-            cin >> hwCount;
+    if (hw == 'y' || hw == 'Y') {
+        cout << "Enter the number of assignments: " << endl;
+        int hwCount;
+        cin >> hwCount;
 
-            cout << "Do you want to generate random grades? (y/n): " <<endl;
+        while (true) {
+            cout << "Do you want to generate random grades? (y/n): " << endl;
             char random;
             cin >> random;
 
@@ -30,27 +31,34 @@ while (true) {
                     Vec1.push_back(Temp); // Store in vector
                     clean(Temp); // Clean the temporary structure
                 }
-            break; // Exit the while loop after processing random grades
+                break; // Exit the inner while loop after processing random grades
+            }
+            else if (random == 'n' || random == 'N') {
+                for (int i = 0; i < n; i++) {
+                    input(Temp, hwCount); // Input data manually
+                    Vec1.push_back(Temp); // Store in vector
+                    clean(Temp); // Clean the temporary structure
+                }
+                break; // Exit the inner while loop after processing homework data
             }
             else {
-                for (int i = 0; i < n; i++) {
-                    input(Temp, hwCount);
-                    Vec1.push_back(Temp);
-                    clean(Temp);
-                }
-            break; // Exit the loop after processing homework data
+                cout << "Invalid input." << endl; // Handle invalid input
             }
         }
-        else if (hw == 'n' || hw == 'N') {
-            for (int i = 0; i < n; i++) {
-                inputgrades(Temp);
-                Vec1.push_back(Temp);
-                clean(Temp);
-            }
-            break; // Exit the loop after processing student data
-        }
-        else {}
+        break; // Exit the outer loop after processing either random or manual grades
     }
+    else if (hw == 'n' || hw == 'N') {
+        for (int i = 0; i < n; i++) {
+            inputgrades(Temp); // Input grades without homework count
+            Vec1.push_back(Temp); // Store in vector
+            clean(Temp); // Clean the temporary structure
+        }
+        break; // Exit the outer loop after processing student data
+    }
+    else {
+        cout << "Invalid input." << endl;
+    }
+}
 
 int option;
 
