@@ -86,15 +86,15 @@ void inputgrades(Stud &Lok) {
     Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
 }
 
-void readFromFile(const std::string &line, Stud &Lok) {
-    std::stringstream ss(line);
-    ss >> Lok.name >> Lok.surname;
+void readFromFile(const string &line, Stud &Lok) {
+    stringstream inputline(line);
+    inputline >> Lok.name >> Lok.surname;
 
     int hw;
     int hwSum = 0;
     int hwCount = 0;
 
-    while (ss >> hw) {
+    while (inputline >> hw) {
         hwSum += hw;
         hwCount++;
         Lok.HW.push_back(hw);
@@ -145,6 +145,14 @@ double calculateMedian(vector<double>& grades) {
     }
 }
 
+void printHeaderfile() {
+    cout << left << setw(15) << "Surname"
+         << setw(15) << "Name"
+         << setw(8) << "Average"
+         << setw(8) << "Median" << endl;
+    cout << string(15 + 15 + 8 + 8, '-') << endl;
+}
+
 void printHeaderavg() {
     cout << left << setw(15) << "Surname"
          << setw(15) << "Name"
@@ -167,6 +175,12 @@ void printHeadermed() {
 //    Lok.avg = 0;
 //}/////////////////////////////////////////////
 
+void outputfile(Stud Lok) {
+    cout << left << setw(15) << Lok.surname
+         << setw(15) << Lok.name
+         << setw(8) << fixed << setprecision(2) << Lok.avg << setw(8) << fixed << setprecision(2) << Lok.med << endl;
+}
+
 void outputavg(Stud Lok) {
     cout << left << setw(15) << Lok.surname
          << setw(15) << Lok.name
@@ -177,6 +191,15 @@ void outputmed(Stud Lok) {
     cout << left << setw(15) << Lok.surname
          << setw(15) << Lok.name
          << setw(8) << fixed << setprecision(2) << Lok.med << endl;
+}
+
+void sortsurname(vector<Stud> &students) {
+    sort(students.begin(), students.end(), [](const Stud &a, const Stud &b) {
+        if (a.surname == b.surname) {
+            return a.name < b.name; // jei pavardes yra vienodos, sortina pagal varda
+        }
+        return a.surname < b.surname;
+    });
 }
 
 void clean(Stud &Lok) {

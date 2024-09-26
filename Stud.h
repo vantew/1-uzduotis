@@ -6,7 +6,7 @@
 struct Stud {
     string name, surname;
     vector<double> HW;
-    double avg, exam, med, rez;
+    double avg, exam, med;
 };
 
 void input(Stud &Lok, int hwCount);
@@ -14,11 +14,14 @@ void inputgrades(Stud &Lok);
 //void inputnull(Stud &Lok); ////////////////////////////
 void readFromFile(const std::string &line, Stud &Lok);
 void randomgrades(Stud &Lok, int hwCount);
+void outputfile(Stud Lok);
 void outputavg(Stud Lok);
 void outputmed(Stud Lok);
 void clean(Stud &Lok);
+void printHeaderfile();
 void printHeaderavg();
 void printHeadermed();
 double calculateMedian(vector<double>& grades);
+void sortsurname(vector<Stud> &students);
 
 #endif // STUD_H_INCLUDED

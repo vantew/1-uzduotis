@@ -25,5 +25,8 @@ using std::sort;
 using std::rand;
 using std::numeric_limits;
 using std::streamsize;
+using std::getline;
+using std::ifstream;
+using std::stringstream;
 
 #endif // MYLIB_H_INCLUDED

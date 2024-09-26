@@ -1,8 +1,6 @@
 #include "Mylib.h"
 #include "Stud.h"
 
-
-
 int main() {
 vector<Stud> Vec1;
 Stud Temp;
@@ -12,29 +10,35 @@ cout << "Do you want to read student information from a file? (y/n): ";
 cin >> fileOption;
 
 if (fileOption == 'y' || fileOption == 'Y') {
-    std::ifstream file("C:\\Users\\vlue1\\Desktop\\studentai10000.txt");
+    ifstream file("C:\\Users\\vlue1\\Desktop\\studentai10000.txt");
 
     if (!file.is_open()) {
-        std::cerr << "Failed to open the file!" << std::endl;
+        cout << "Failed to open the file!" << endl;
         return 0;
     }
 
-    std::string line;
-    std::getline(file, line);
+    string line;
+    getline(file, line);
 
-    while (std::getline(file, line)) {
+    while (getline(file, line)) {
         readFromFile(line, Temp);
         Vec1.push_back(Temp);
         clean(Temp);
     }
 
+    printHeaderfile();
+    sortsurname(Vec1);
+        for (Stud student : Vec1) {
+            outputfile(student);
+        }
     file.close();
+    return 0;
 }
 
 else if (fileOption == 'n' || fileOption == 'N') {
     int n;
     while (true) {
-        cout << "How many students? " << endl;
+        cout << "How many students will you be grading? " << endl;
         cin >> n;
 
         if (cin.fail()) {
@@ -135,6 +139,7 @@ else if (fileOption == 'n' || fileOption == 'N') {
 
         if (option == 1) {
             printHeaderavg();
+            sortsurname(Vec1);
             for (Stud student : Vec1) {
                 outputavg(student);
             }
@@ -145,6 +150,7 @@ else if (fileOption == 'n' || fileOption == 'N') {
                 cin >> viewMedian;
                 if (viewMedian == 'y' || viewMedian == 'Y') {
                     printHeadermed();
+                    sortsurname(Vec1);
                     for (Stud student : Vec1) {
                         outputmed(student);
                     }
@@ -154,6 +160,7 @@ else if (fileOption == 'n' || fileOption == 'N') {
             } while (viewMedian != 'y' && viewMedian != 'Y' && viewMedian != 'n' && viewMedian != 'N');
         } else if (option == 2) {
             printHeadermed();
+            sortsurname(Vec1);
             for (Stud student : Vec1) {
                 outputmed(student);
             }
@@ -164,6 +171,7 @@ else if (fileOption == 'n' || fileOption == 'N') {
                 cin >> viewAverage;
                 if (viewAverage == 'y' || viewAverage == 'Y') {
                     printHeaderavg();
+                    sortsurname(Vec1);
                     for (Stud student : Vec1) {
                         outputavg(student);
                     }
