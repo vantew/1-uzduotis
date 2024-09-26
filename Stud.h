@@ -11,7 +11,8 @@ struct Stud {
 
 void input(Stud &Lok, int hwCount);
 void inputgrades(Stud &Lok);
-void inputnull(Stud &Lok); ////////////////////////////
+//void inputnull(Stud &Lok); ////////////////////////////
+void readFromFile(const std::string &line, Stud &Lok);
 void randomgrades(Stud &Lok, int hwCount);
 void outputavg(Stud Lok);
 void outputmed(Stud Lok);

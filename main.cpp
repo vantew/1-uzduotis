@@ -2,10 +2,36 @@
 #include "Stud.h"
 
 
-int main() {
-    vector<Stud> Vec1;
-    Stud Temp;
 
+int main() {
+vector<Stud> Vec1;
+Stud Temp;
+
+char fileOption;
+cout << "Do you want to read student information from a file? (y/n): ";
+cin >> fileOption;
+
+if (fileOption == 'y' || fileOption == 'Y') {
+    std::ifstream file("C:\\Users\\vlue1\\Desktop\\studentai10000.txt");
+
+    if (!file.is_open()) {
+        std::cerr << "Failed to open the file!" << std::endl;
+        return 0;
+    }
+
+    std::string line;
+    std::getline(file, line);
+
+    while (std::getline(file, line)) {
+        readFromFile(line, Temp);
+        Vec1.push_back(Temp);
+        clean(Temp);
+    }
+
+    file.close();
+}
+
+else if (fileOption == 'n' || fileOption == 'N') {
     int n;
     while (true) {
         cout << "How many students? " << endl;
@@ -14,7 +40,6 @@ int main() {
         if (cin.fail()) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
             cout << "Invalid input. Please enter a number." << endl;
         }
         else if (n > 0) {
@@ -26,8 +51,7 @@ int main() {
     }
 
     char hw;
-
-while (true) {
+    while (true) {
         do {
             cout << "Do you know the number of homework assignments per student? (y/n):" << endl;
             cin >> hw;
@@ -41,25 +65,23 @@ while (true) {
             int hwCount;
             while (true) {
                 cout << "Enter the number of assignments: " << endl;
-
                 cin >> hwCount;
 
                 if (cin.fail()) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
                     cout << "Invalid input. Please enter a number." << endl;
                 }
-                else if (hwCount < 0) cout << "Enter a positive number." <<endl;
-
-                    else if (hwCount == 0) {/////////////////////////////////
-                        for (int i = 0; i < n; i++) {
-                            inputnull(Temp);
-                        }////////////////////////////////////
-
-                        break;
-                    }
-                    else break;
+                else if (hwCount < 0) {
+                    cout << "Enter a positive number." <<endl;
+                }
+//                else if (hwCount == 0) {
+//                    for (int i = 0; i < n; i++) {
+//                        inputnull(Temp);
+//                    }
+//                    break;
+//                }
+                else break;
             }
 
             char random;
@@ -72,14 +94,14 @@ while (true) {
                 }
             } while (random != 'y' && random != 'Y' && random != 'n' && random != 'N');
 
-            if (random == 'y' || random == 'Y') { // sugeneruoja random grades
+            if (random == 'y' || random == 'Y') {
                 for (int i = 0; i < n; i++) {
                     randomgrades(Temp, hwCount);
                     Vec1.push_back(Temp);
                     clean(Temp);
                 }
             }
-            else if (random == 'n' || random == 'N') { // suvedam grades, zinodami hwCount
+            else if (random == 'n' || random == 'N') {
                 for (int i = 0; i < n; i++) {
                     input(Temp, hwCount);
                     Vec1.push_back(Temp);
@@ -88,8 +110,7 @@ while (true) {
             }
             break;
         }
-
-        else if (hw == 'n' || hw == 'N') { // suvedam grases, nezinodami hwCount
+        else if (hw == 'n' || hw == 'N') {
             for (int i = 0; i < n; i++) {
                 inputgrades(Temp);
                 Vec1.push_back(Temp);
@@ -98,10 +119,10 @@ while (true) {
             break;
         }
     }
+}
 
-int option;
-
-do {
+    int option;
+    do {
         cout << "Choose option: 1 to view average, 2 to view median: " << endl;
 
         cin >> option;
@@ -156,5 +177,7 @@ do {
 
     } while (option != 1 && option != 2);
 
-system("pause");
+    system("pause");
+    return 0;
 }
+

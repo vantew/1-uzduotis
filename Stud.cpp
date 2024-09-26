@@ -86,6 +86,29 @@ void inputgrades(Stud &Lok) {
     Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
 }
 
+void readFromFile(const std::string &line, Stud &Lok) {
+    std::stringstream ss(line);
+    ss >> Lok.name >> Lok.surname;
+
+    int hw;
+    int hwSum = 0;
+    int hwCount = 0;
+
+    while (ss >> hw) {
+        hwSum += hw;
+        hwCount++;
+        Lok.HW.push_back(hw);
+    }
+
+    Lok.exam = Lok.HW.back();
+    Lok.HW.pop_back(); // Remove the exam grade from homework grades
+    Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
+
+    Lok.HW.push_back(Lok.exam);
+    Lok.med = calculateMedian(Lok.HW);
+
+}
+
 void randomgrades(Stud &Lok, int hwCount) {
     cout << "Input student's name and surname: " << endl;
     cin >> Lok.name >> Lok.surname;
@@ -123,36 +146,36 @@ double calculateMedian(vector<double>& grades) {
 }
 
 void printHeaderavg() {
-    cout << left << setw(12) << "Surname"
-         << setw(12) << "Name"
+    cout << left << setw(15) << "Surname"
+         << setw(15) << "Name"
          << setw(8) << "Average" << endl;
-    cout << string(12 + 12 + 8, '-') << endl;
+    cout << string(15 + 15 + 8, '-') << endl;
 }
 
 void printHeadermed() {
-    cout << left << setw(12) << "Surname"
-         << setw(12) << "Name"
+    cout << left << setw(15) << "Surname"
+         << setw(15) << "Name"
          << setw(8) << "Median" << endl;
-    cout << string(12 + 12 + 8, '-') << endl;
+    cout << string(15 + 15 + 8, '-') << endl;
 }
 
-void inputnull(Stud &Lok) {/////////////////////////////////////
-    cout << "Input student's name and surname: " << endl;
-    cin >> Lok.name >> Lok.surname;
-
-    Lok.med = 0;
-    Lok.avg = 0;
-}/////////////////////////////////////////////
+//void inputnull(Stud &Lok) {/////////////////////////////////////
+//    cout << "Input student's name and surname: " << endl;
+//    cin >> Lok.name >> Lok.surname;
+//
+//    Lok.med = 0;
+//    Lok.avg = 0;
+//}/////////////////////////////////////////////
 
 void outputavg(Stud Lok) {
-    cout << left << setw(12) << Lok.surname
-         << setw(12) << Lok.name
+    cout << left << setw(15) << Lok.surname
+         << setw(15) << Lok.name
          << setw(8) << fixed << setprecision(2) << Lok.avg << endl;
 }
 
 void outputmed(Stud Lok) {
-    cout << left << setw(12) << Lok.surname
-         << setw(12) << Lok.name
+    cout << left << setw(15) << Lok.surname
+         << setw(15) << Lok.name
          << setw(8) << fixed << setprecision(2) << Lok.med << endl;
 }
 
