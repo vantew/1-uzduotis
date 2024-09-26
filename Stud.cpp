@@ -86,7 +86,7 @@ void inputgrades(Stud &Lok) {
     Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
 }
 
-void readFromFile(const string &line, Stud &Lok) {
+void readfile(const string &line, Stud &Lok) {
     stringstream inputline(line);
     inputline >> Lok.name >> Lok.surname;
 
@@ -101,8 +101,8 @@ void readFromFile(const string &line, Stud &Lok) {
     }
 
     Lok.exam = Lok.HW.back();
-    Lok.HW.pop_back(); // Remove the exam grade from homework grades
-    Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
+    hwSum -= Lok.exam;
+    Lok.avg = (hwSum + Lok.exam) / (hwCount);
 
     Lok.HW.push_back(Lok.exam);
     Lok.med = calculateMedian(Lok.HW);
@@ -167,13 +167,18 @@ void printHeadermed() {
     cout << string(15 + 15 + 8, '-') << endl;
 }
 
-//void inputnull(Stud &Lok) {/////////////////////////////////////
-//    cout << "Input student's name and surname: " << endl;
-//    cin >> Lok.name >> Lok.surname;
-//
-//    Lok.med = 0;
-//    Lok.avg = 0;
-//}/////////////////////////////////////////////
+void inputnull(Stud &Lok) {
+    cout << "Input student's name and surname: " << endl;
+    cin >> Lok.name >> Lok.surname;
+}
+
+void outputnull(Stud Lok) {
+    Lok.avg = 0;
+    Lok.med = 0;
+    cout << left << setw(15) << Lok.surname
+         << setw(15) << Lok.name
+         << setw(8) << fixed << setprecision(2) << Lok.avg << setw(8) << fixed << setprecision(2) << Lok.med << endl;
+}
 
 void outputfile(Stud Lok) {
     cout << left << setw(15) << Lok.surname

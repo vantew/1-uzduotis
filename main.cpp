@@ -5,11 +5,19 @@ int main() {
 vector<Stud> Vec1;
 Stud Temp;
 
-char fileOption;
-cout << "Do you want to read student information from a file? (y/n): ";
-cin >> fileOption;
+char fileoption;
+    do {
+        cout << "Do you want to read student information from a file? (y/n): ";
+        cin >> fileoption;
 
-if (fileOption == 'y' || fileOption == 'Y') {
+        if (fileoption != 'y' && fileoption != 'Y' && fileoption != 'n' && fileoption != 'N') {
+            cout << "Invalid input. Please enter 'y' or 'n'." << endl;
+        }
+
+    } while (fileoption != 'y' && fileoption != 'Y' && fileoption != 'n' && fileoption != 'N');
+
+
+if (fileoption == 'y' || fileoption == 'Y') {
     ifstream file("C:\\Users\\vlue1\\Desktop\\studentai10000.txt");
 
     if (!file.is_open()) {
@@ -21,7 +29,7 @@ if (fileOption == 'y' || fileOption == 'Y') {
     getline(file, line);
 
     while (getline(file, line)) {
-        readFromFile(line, Temp);
+        readfile(line, Temp);
         Vec1.push_back(Temp);
         clean(Temp);
     }
@@ -35,7 +43,7 @@ if (fileOption == 'y' || fileOption == 'Y') {
     return 0;
 }
 
-else if (fileOption == 'n' || fileOption == 'N') {
+else if (fileoption == 'n' || fileoption == 'N') {
     int n;
     while (true) {
         cout << "How many students will you be grading? " << endl;
@@ -79,12 +87,18 @@ else if (fileOption == 'n' || fileOption == 'N') {
                 else if (hwCount < 0) {
                     cout << "Enter a positive number." <<endl;
                 }
-//                else if (hwCount == 0) {
-//                    for (int i = 0; i < n; i++) {
-//                        inputnull(Temp);
-//                    }
-//                    break;
-//                }
+                else if (hwCount == 0) {
+
+                    for (int i = 0; i < n; i++) {
+                        inputnull(Temp);
+                    }
+                    printHeaderfile();
+                    for (int i = 0; i < n; i++) {
+                        outputnull(Temp);
+                    }
+
+                    return 0;
+                }
                 else break;
             }
 
