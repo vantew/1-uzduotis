@@ -18,30 +18,32 @@ char fileoption;
 
 
 if (fileoption == 'y' || fileoption == 'Y') {
-    ifstream file("C:\\Users\\vlue1\\Desktop\\studentai10000.txt");
+    try {
+        ifstream file("C:\\Users\\vlue1\\Desktop\\studentai10000.txt");
+        if (!file.is_open()) {
+            throw std::runtime_error("Failed to open file.");
+        }
 
-    if (!file.is_open()) {
-        cout << "Failed to open the file!" << endl;
-        return 0;
-    }
+        string line;
+        getline(file, line);
+        while (getline(file, line)) {
+            readfile(line, Temp);
+            Vec1.push_back(Temp);
+            clean(Temp);
+        }
 
-    string line;
-    getline(file, line);
-
-    while (getline(file, line)) {
-        readfile(line, Temp);
-        Vec1.push_back(Temp);
-        clean(Temp);
-    }
-
-    printHeaderfile();
-    sortsurname(Vec1);
+        printHeaderfile();
+        sortsurname(Vec1);
         for (Stud student : Vec1) {
             outputfile(student);
         }
-    file.close();
-    return 0;
+        file.close();
+    } catch (const std::exception &e) {
+        cout << "Error: " << e.what() << endl;
+        return 0;
+    }
 }
+
 
 else if (fileoption == 'n' || fileoption == 'N') {
     int n;
