@@ -1,6 +1,5 @@
 #include "Mylib.h"
 #include "Stud.h"
-#include <fstream>
 
 int main() {
 vector<Stud> Vec1;
@@ -17,49 +16,44 @@ char fileoption;
 
     } while (fileoption != 'y' && fileoption != 'Y' && fileoption != 'n' && fileoption != 'N');
 
-
 if (fileoption == 'y' || fileoption == 'Y') {
     try {
-        ifstream file("C:\\Users\\vlue1\\Desktop\\studentai10000.txt");
+        ifstream file("studentai10000.txt");
         if (!file.is_open()) {
             throw runtime_error("Failed to open input file.");
         }
 
-        ofstream outfile("output.txt");  // Output file
+        ofstream outfile("outputas.txt");
         if (!outfile.is_open()) {
             throw runtime_error("Failed to open output file.");
         }
 
         string line;
-        getline(file, line);
-        vector<Stud> Vec1;
-        Stud Temp;
+        getline(file, line); // nuskaito headeri
 
-        while (getline(file, line)) {
-            // Assuming readfile is defined elsewhere
+        while (getline(file, line)) { // nuskaitineja faila po eilute
             readfile(line, Temp);
             Vec1.push_back(Temp);
             clean(Temp);
         }
 
-        printHeaderfile(outfile);  // Print header to the output file
+        printHeaderfile(outfile);
 
         for (Stud student : Vec1) {
-            outputfile(outfile, student);  // Write student data to the output file
+            outputfile(outfile, student);
         }
         file.close();
         outfile.close();
+        cout << "Printed to output file." << endl;
+        system("pause");
         return 0;
     }
     catch (const std::exception &e) {
         cerr << e.what() << endl;
     }
+    system("pause");
     return 0;
 }
-
-
-
-
 
 else if (fileoption == 'n' || fileoption == 'N') {
     int n;
@@ -187,7 +181,7 @@ else if (fileoption == 'n' || fileoption == 'N') {
                     }
                 } else if (viewMedian != 'n' && viewMedian != 'N') {
                     cout << "Invalid input. Please enter 'y' or 'n'." << endl;
-                }
+                    }
             } while (viewMedian != 'y' && viewMedian != 'Y' && viewMedian != 'n' && viewMedian != 'N');
 
         } else if (option == 2) {
@@ -215,9 +209,9 @@ else if (fileoption == 'n' || fileoption == 'N') {
             cout << "Invalid option! Please try again." << endl;
         }
 
-    } while (option != 1 && option != 2);
+    }
+    while (option != 1 && option != 2);
 
     system("pause");
     return 0;
 }
-

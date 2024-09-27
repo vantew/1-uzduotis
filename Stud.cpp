@@ -46,8 +46,8 @@ void inputgrades(Stud &Lok) {
     cin >> Lok.name >> Lok.surname;
 
     int hw;
-    int hwSum = 0;
-    int hwCount = 0;
+    double hwSum = 0;
+    double hwCount = 0;
 
     cout << "Enter the homework grades for \033[1;3m" << Lok.name << " "
          << Lok.surname << "\033[0m, when you are done, type 0." << endl;
@@ -97,8 +97,8 @@ void readfile(const string &line, Stud &Lok) {
     inputline >> Lok.name >> Lok.surname;
 
     int hw;
-    int hwSum = 0;
-    int hwCount = 0;
+    double hwSum = 0;
+    double hwCount = 0;
 
     while (inputline >> hw) {
         hwSum += hw;
@@ -106,11 +106,7 @@ void readfile(const string &line, Stud &Lok) {
         Lok.HW.push_back(hw);
     }
 
-    Lok.exam = Lok.HW.back();
-    hwSum -= Lok.exam;
-    Lok.avg = (hwSum + Lok.exam) / (hwCount);
-
-    Lok.HW.push_back(Lok.exam); // ???????
+    Lok.avg = (hwSum) / (hwCount);
     Lok.med = calculateMedian(Lok.HW);
 }
 
@@ -119,7 +115,7 @@ void randomgrades(Stud &Lok, int hwCount) {
     cin >> Lok.name >> Lok.surname;
 
     int hw;
-    int hwSum = 0;
+    double hwSum = 0;
     cout << Lok.name << " " << Lok.surname << " grades are: ";
 
     for (int i = 0; i < hwCount; i++) {

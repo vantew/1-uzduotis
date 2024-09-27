@@ -1,8 +1,7 @@
 # depslib dependency file v1.0
-1727448256 source:c:\users\vlue1\desktop\mynewproject2024\main.cpp
+1727453941 source:c:\users\vlue1\desktop\mynewproject2024\main.cpp
 	"Mylib.h"
 	"Stud.h"
-	<fstream>
 
 1727448175 c:\users\vlue1\desktop\mynewproject2024\mylib.h
 	<iostream>
@@ -18,6 +17,6 @@
 1727448298 c:\users\vlue1\desktop\mynewproject2024\stud.h
 	"Mylib.h"
 
-1727448284 source:c:\users\vlue1\desktop\mynewproject2024\stud.cpp
+1727453750 source:c:\users\vlue1\desktop\mynewproject2024\stud.cpp
 	"Stud.h"
 
