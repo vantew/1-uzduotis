@@ -90,7 +90,6 @@ else if (fileoption == 'n' || fileoption == 'N') {
                     cout << "Enter a positive number." <<endl;
                 }
                 else if (hwCount == 0) {
-
                     for (int i = 0; i < n; i++) {
                         inputnull(Temp);
                     }
@@ -98,7 +97,7 @@ else if (fileoption == 'n' || fileoption == 'N') {
                     for (int i = 0; i < n; i++) {
                         outputnull(Temp);
                     }
-
+                    system("pause");
                     return 0;
                 }
                 else break;
@@ -174,6 +173,7 @@ else if (fileoption == 'n' || fileoption == 'N') {
                     cout << "Invalid input. Please enter 'y' or 'n'." << endl;
                 }
             } while (viewMedian != 'y' && viewMedian != 'Y' && viewMedian != 'n' && viewMedian != 'N');
+
         } else if (option == 2) {
             printHeadermed();
             sortsurname(Vec1);

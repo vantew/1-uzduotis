@@ -21,16 +21,20 @@ void input(Stud &Lok, int hwCount) {
             }
     }
     cout << "Enter the exam grade: " << endl;
-    int m = 1;
-    for (int i = 0; i < m; i++) {
+    while (true) {
         cin >> Lok.exam;
-        if ((Lok.exam < 1) || (Lok.exam > 10)) {
-            cout << "Invalid number! Try again." <<endl;
-            i--;
-            }
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input! Try again." << endl;
+        }
+        else if (Lok.exam < 1 || Lok.exam > 10) {
+            cout << "Invalid number! Try again." << endl;
+        }
+        else break;
     }
 
-    Lok.HW.push_back(Lok.exam);
+    Lok.HW.push_back(Lok.exam); // ipushinam Lok.exam i Vec1 vektoriu del medianos skaiciavimo
     Lok.med = calculateMedian(Lok.HW);
     Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
 }
@@ -81,7 +85,7 @@ void inputgrades(Stud &Lok) {
         else break;
     }
 
-    Lok.HW.push_back(Lok.exam);
+    Lok.HW.push_back(Lok.exam); // ipushinam Lok.exam i Vec1 vektoriu del medianos skaiciavimo
     Lok.med = calculateMedian(Lok.HW);
     Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
 }
@@ -104,9 +108,8 @@ void readfile(const string &line, Stud &Lok) {
     hwSum -= Lok.exam;
     Lok.avg = (hwSum + Lok.exam) / (hwCount);
 
-    Lok.HW.push_back(Lok.exam);
+    Lok.HW.push_back(Lok.exam); // ???????
     Lok.med = calculateMedian(Lok.HW);
-
 }
 
 void randomgrades(Stud &Lok, int hwCount) {
@@ -198,8 +201,8 @@ void outputmed(Stud Lok) {
          << setw(8) << fixed << setprecision(2) << Lok.med << endl;
 }
 
-void sortsurname(vector<Stud> &students) {
-    sort(students.begin(), students.end(), [](const Stud &a, const Stud &b) {
+void sortsurname(vector<Stud> &Lok) {
+    sort(Lok.begin(), Lok.end(), [](const Stud &a, const Stud &b) {
         if (a.surname == b.surname) {
             return a.name < b.name; // jei pavardes yra vienodos, sortina pagal varda
         }

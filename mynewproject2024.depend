@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1727381650 source:c:\users\vlue1\desktop\mynewproject2024\main.cpp
+1727416787 source:c:\users\vlue1\desktop\mynewproject2024\main.cpp
 	"Mylib.h"
 	"Stud.h"
 
@@ -17,6 +17,6 @@
 1727378671 c:\users\vlue1\desktop\mynewproject2024\stud.h
 	"Mylib.h"
 
-1727381650 source:c:\users\vlue1\desktop\mynewproject2024\stud.cpp
+1727416787 source:c:\users\vlue1\desktop\mynewproject2024\stud.cpp
 	"Stud.h"
 
