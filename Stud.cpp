@@ -34,9 +34,10 @@ void input(Stud &Lok, int hwCount) {
         else break;
     }
 
+    Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
     Lok.HW.push_back(Lok.exam); // ipushinam Lok.exam i Vec1 vektoriu del medianos skaiciavimo
     Lok.med = calculateMedian(Lok.HW);
-    Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
+
 }
 
 
@@ -85,9 +86,10 @@ void inputgrades(Stud &Lok) {
         else break;
     }
 
+    Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
     Lok.HW.push_back(Lok.exam); // ipushinam Lok.exam i Vec1 vektoriu del medianos skaiciavimo
     Lok.med = calculateMedian(Lok.HW);
-    Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
+
 }
 
 void readfile(const string &line, Stud &Lok) {
@@ -127,11 +129,12 @@ void randomgrades(Stud &Lok, int hwCount) {
         cout << hw << " ";
     }
     Lok.exam = (rand() % 10) + 1;
-    Lok.HW.push_back(Lok.exam);
+
     cout << "; Exam grade: " << Lok.exam << endl;
 
-    Lok.med = calculateMedian(Lok.HW);
     Lok.avg = (hwSum + Lok.exam) / (hwCount + 1);
+    Lok.HW.push_back(Lok.exam);
+    Lok.med = calculateMedian(Lok.HW);
 
 }
 
@@ -148,11 +151,19 @@ double calculateMedian(vector<double>& grades) {
     }
 }
 
-void printHeaderfile() {
+void printHeaderfile(ofstream &outfile) {
+    outfile << left << setw(15) << "Surname"
+            << setw(15) << "Name"
+            << setw(8) << "Average"
+            << setw(8) << "Median" << endl;
+    outfile << string(15 + 15 + 8 + 8, '-') << endl;
+}
+
+void printHeadernull() {
     cout << left << setw(15) << "Surname"
-         << setw(15) << "Name"
-         << setw(8) << "Average"
-         << setw(8) << "Median" << endl;
+            << setw(15) << "Name"
+            << setw(8) << "Average"
+            << setw(8) << "Median" << endl;
     cout << string(15 + 15 + 8 + 8, '-') << endl;
 }
 
@@ -183,10 +194,11 @@ void outputnull(Stud Lok) {
          << setw(8) << fixed << setprecision(2) << Lok.avg << setw(8) << fixed << setprecision(2) << Lok.med << endl;
 }
 
-void outputfile(Stud Lok) {
-    cout << left << setw(15) << Lok.surname
-         << setw(15) << Lok.name
-         << setw(8) << fixed << setprecision(2) << Lok.avg << setw(8) << fixed << setprecision(2) << Lok.med << endl;
+void outputfile(ofstream &outfile, Stud Lok) {
+    outfile << left << setw(15) << Lok.surname
+            << setw(15) << Lok.name
+            << setw(8) << fixed << setprecision(2) << Lok.avg
+            << setw(8) << fixed << setprecision(2) << Lok.med << endl;
 }
 
 void outputavg(Stud Lok) {

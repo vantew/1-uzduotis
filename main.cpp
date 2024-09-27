@@ -1,5 +1,6 @@
 #include "Mylib.h"
 #include "Stud.h"
+#include <fstream>
 
 int main() {
 vector<Stud> Vec1;
@@ -21,28 +22,43 @@ if (fileoption == 'y' || fileoption == 'Y') {
     try {
         ifstream file("C:\\Users\\vlue1\\Desktop\\studentai10000.txt");
         if (!file.is_open()) {
-            throw std::runtime_error("Failed to open file.");
+            throw runtime_error("Failed to open input file.");
+        }
+
+        ofstream outfile("output.txt");  // Output file
+        if (!outfile.is_open()) {
+            throw runtime_error("Failed to open output file.");
         }
 
         string line;
         getline(file, line);
+        vector<Stud> Vec1;
+        Stud Temp;
+
         while (getline(file, line)) {
+            // Assuming readfile is defined elsewhere
             readfile(line, Temp);
             Vec1.push_back(Temp);
             clean(Temp);
         }
 
-        printHeaderfile();
-        sortsurname(Vec1);
+        printHeaderfile(outfile);  // Print header to the output file
+
         for (Stud student : Vec1) {
-            outputfile(student);
+            outputfile(outfile, student);  // Write student data to the output file
         }
         file.close();
-    } catch (const std::exception &e) {
-        cout << "Error: " << e.what() << endl;
+        outfile.close();
         return 0;
     }
+    catch (const std::exception &e) {
+        cerr << e.what() << endl;
+    }
+    return 0;
 }
+
+
+
 
 
 else if (fileoption == 'n' || fileoption == 'N') {
@@ -93,7 +109,7 @@ else if (fileoption == 'n' || fileoption == 'N') {
                     for (int i = 0; i < n; i++) {
                         inputnull(Temp);
                     }
-                    printHeaderfile();
+                    printHeadernull();
                     for (int i = 0; i < n; i++) {
                         outputnull(Temp);
                     }

@@ -15,13 +15,14 @@ void inputnull(Stud &Lok);
 void readfile(const string &line, Stud &Lok);
 void randomgrades(Stud &Lok, int hwCount);
 void outputnull(Stud Lok);
-void outputfile(Stud Lok);
+void outputfile(ofstream &outfile, Stud Lok);
 void outputavg(Stud Lok);
 void outputmed(Stud Lok);
 void clean(Stud &Lok);
-void printHeaderfile();
+void printHeaderfile(ofstream &outfile);
 void printHeaderavg();
 void printHeadermed();
+void printHeadernull();
 double calculateMedian(vector<double>& grades);
 void sortsurname(vector<Stud> &students);
 

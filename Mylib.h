@@ -7,7 +7,6 @@
 #include <iomanip>
 #include <algorithm>
 #include <limits>
-
 #include <fstream>
 #include <sstream>
 #include <numeric>
@@ -28,5 +27,9 @@ using std::streamsize;
 using std::getline;
 using std::ifstream;
 using std::stringstream;
+using std::runtime_error;
+using std::ofstream;
+using std::cerr;
+
 
 #endif // MYLIB_H_INCLUDED
