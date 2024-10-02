@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1727864470 source:c:\users\vlue1\desktop\v0.2\main.cpp
+	"libraries.h"
+	"functions.h"
+
+1727863776 source:c:\users\vlue1\desktop\v0.2\functions.cpp
+	"functions.h"
+
+1727864723 c:\users\vlue1\desktop\v0.2\functions.h
+	"libraries.h"
+
+1727864507 c:\users\vlue1\desktop\v0.2\libraries.h
+	<iostream>
+	<fstream>
+	<string>
+	<cstdlib>
+	<ctime>
+
