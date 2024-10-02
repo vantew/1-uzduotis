@@ -224,6 +224,9 @@ void clean(Stud &Lok) {
     Lok.HW.clear();
 }
 
+//////////////////////////////////////////////////////////////////////
+///////////////// V0.2
+//////////////////////////////////////////////////////////////////////
 void filegeneration(const string &filename, int numEntries, int numND, vector<Stud> &Vec1) {
     ofstream file(filename);
 
@@ -234,28 +237,70 @@ void filegeneration(const string &filename, int numEntries, int numND, vector<St
 
     srand(static_cast<unsigned int>(time(0))); // kad kaskart butu generuojami skirtingi grades
 
-    file << setw(15) << "Vardas"
-         << setw(15) << "Pavarde"
-         << setw(10) << "Average" << endl;
+    file << fixed << left << setw(15) << "Vardas"
+                          << setw(15) << "Pavarde"
+                          << setw(10) << "Average" << endl;
 
     for (int j = 1; j <= numEntries; j++) {
         Stud Temp;
         Temp.name = "Vardas" + to_string(j); // Vardas1, Vardas2,...
         Temp.surname = "Pavarde" + to_string(j); // Pavarde1, Pavarde2, ...
-        file << setw(15) << Temp.name << setw(15) << Temp.surname;
+        file << fixed << left << setw(15) << Temp.name << setw(15) << Temp.surname;
 
         for (int i = 0; i < numND; i++) {
             Temp.HW.push_back(rand() % 10 + 1); // sugeneruojam nd grades
 
         }
-
-        Temp.exam = rand() % 10 + 1;
+        Temp.exam = rand() % 10 + 1; // sugeneruojam exam grade
 
         Temp.avg = (Temp.exam + accumulate(Temp.HW.begin(), Temp.HW.end(), 0.00)) / (numND + 1);
-        file << setw(10) << Temp.avg << endl;
+        file << fixed << left << setprecision(2) << setw(10) << Temp.avg << endl;
 
         Vec1.push_back(Temp);
     }
     cout << "printed" << endl;
+
     file.close();
+}
+
+void filterstudents(const string &inputfile, const string &below5, const string &above5, vector<Stud> &Vec1) {
+    ifstream file(inputfile);
+    ofstream nuskriaustukai(below5);
+    ofstream kietakai(above5);
+
+    if (!file.is_open()) {
+        cerr << "Failed to open input file." << endl;
+        return;
+    }
+
+    string line;
+    getline(file, line); // nuskaito headeri
+
+    Vec1.clear();
+
+    while (getline(file, line)) {
+        istringstream inputline(line); // istringstream tinka visokiu tipo duomenim nuskaityt int, string ir tt
+
+        Stud student;
+        if (inputline >> student.name >> student.surname >> student.avg) {
+            Vec1.push_back(student);
+        }
+    }
+
+    for (const auto& student : Vec1) {
+        if (student.avg < 5.0) {
+            nuskriaustukai << fixed << left << setw(20) << student.name
+                            << setw(20) << student.surname
+                            << setw(10) << setprecision(2) << student.avg << endl;
+        } else {
+            kietakai << fixed << left << setw(20) << student.name
+                     << setw(20) << student.surname
+                     << setw(10) << setprecision(2) << student.avg << endl;
+        }
+    }
+
+    file.close();
+    nuskriaustukai.close();
+    kietakai.close();
+    cout << "sorted" << endl;
 }

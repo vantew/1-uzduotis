@@ -56,6 +56,9 @@ int main() {
     } else if (fileoption == 'n' || fileoption == 'N') {
         char generatefiles;
         cout << "Do you want to generate files for v0.2? (y/n): ";
+//////////////////////////////////////////////////////////////////////
+///////////////// V0.2
+//////////////////////////////////////////////////////////////////////
         cin >> generatefiles;
         if (generatefiles == 'y' || generatefiles == 'Y') {
             int numND;
@@ -64,12 +67,24 @@ int main() {
             cin >> numND;
 
             filegeneration("studentai_1000.txt", 1000, numND, Vec1);
+            filterstudents("studentai_1000.txt", "nuskriaustukai_1000.txt", "kietakai_1000.txt", Vec1);
+
             filegeneration("studentai_10000.txt", 10000, numND, Vec1);
+            filterstudents("studentai_10000.txt", "nuskriaustukai_10000.txt", "kietakai_10000.txt", Vec1);
+
             filegeneration("studentai_100000.txt", 100000, numND, Vec1);
+            filterstudents("studentai_100000.txt", "nuskriaustukai_100000.txt", "kietakai_100000.txt", Vec1);
+
             filegeneration("studentai_1000000.txt", 1000000, numND, Vec1);
+            filterstudents("studentai_1000000.txt", "nuskriaustukai_1000000.txt", "kietakai_1000000.txt", Vec1);
+
             filegeneration("studentai_10000000.txt", 10000000, numND, Vec1);
+            filterstudents("studentai_10000000.txt", "nuskriaustukai_1000000.txt", "kietakai_1000000.txt", Vec1);
 
     return 0;
+//////////////////////////////////////////////////////////////////////
+///////////////// V0.2
+//////////////////////////////////////////////////////////////////////
         } else {
             int n;
             while (true) {

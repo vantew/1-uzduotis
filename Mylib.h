@@ -32,6 +32,7 @@ using std::ofstream;
 using std::cerr;
 using std::exception;
 using std::to_string;
+using std::istringstream;
 
 
 #endif // MYLIB_H_INCLUDED
