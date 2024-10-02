@@ -229,6 +229,11 @@ void clean(Stud &Lok) {
 //////////////////////////////////////////////////////////////////////
 void filegeneration(const string &filename, int numEntries, int numND, vector<Stud> &Vec1) {
     ofstream file(filename);
+    auto start = std::chrono::high_resolution_clock::now();
+
+
+
+
 
     if (!file) {
         cerr << "Failed to open file: " << filename << endl;
@@ -261,6 +266,12 @@ void filegeneration(const string &filename, int numEntries, int numND, vector<St
     cout << "printed" << endl;
 
     file.close();
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end - start;
+
+    // Output the elapsed time
+    std::cout << "Failo is " << numEntries << " nuskaitymo laikas: " << elapsed.count() << std::endl;
 }
 
 void filterstudents(const string &inputfile, const string &below5, const string &above5, vector<Stud> &Vec1) {
