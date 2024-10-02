@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1727893331 source:c:\users\vlue1\desktop\mynewproject2024\main.cpp
+	"Mylib.h"
+	"Stud.h"
+
+1727893373 c:\users\vlue1\desktop\mynewproject2024\mylib.h
+	<iostream>
+	<string>
+	<vector>
+	<iomanip>
+	<algorithm>
+	<limits>
+	<fstream>
+	<sstream>
+	<numeric>
+
+1727893360 c:\users\vlue1\desktop\mynewproject2024\stud.h
+	"Mylib.h"
+
+1727893360 source:c:\users\vlue1\desktop\mynewproject2024\stud.cpp
+	"Stud.h"
+
