@@ -227,20 +227,16 @@ void clean(Stud &Lok) {
 //////////////////////////////////////////////////////////////////////
 ///////////////// V0.2
 //////////////////////////////////////////////////////////////////////
-void filegeneration(const string &filename, int numEntries, int numND, vector<Stud> &Vec1) {
+void filegeneration(const string &filename, int numEntries, int numHW, vector<Stud> &Vec1) {
     ofstream file(filename);
     auto start = std::chrono::high_resolution_clock::now();
-
-
-
-
 
     if (!file) {
         cerr << "Failed to open file: " << filename << endl;
         return;
     }
 
-    srand(static_cast<unsigned int>(time(0))); // kad kaskart butu generuojami skirtingi grades
+    srand(static_cast<unsigned int>(time(0)));
 
     file << fixed << left << setw(15) << "Vardas"
                           << setw(15) << "Pavarde"
@@ -248,70 +244,111 @@ void filegeneration(const string &filename, int numEntries, int numND, vector<St
 
     for (int j = 1; j <= numEntries; j++) {
         Stud Temp;
-        Temp.name = "Vardas" + to_string(j); // Vardas1, Vardas2,...
-        Temp.surname = "Pavarde" + to_string(j); // Pavarde1, Pavarde2, ...
+        Temp.name = "Vardas" + to_string(j);
+        Temp.surname = "Pavarde" + to_string(j);
         file << fixed << left << setw(15) << Temp.name << setw(15) << Temp.surname;
 
-        for (int i = 0; i < numND; i++) {
-            Temp.HW.push_back(rand() % 10 + 1); // sugeneruojam nd grades
-
+        for (int i = 0; i < numHW; i++) {
+            Temp.HW.push_back(rand() % 10 + 1);
         }
-        Temp.exam = rand() % 10 + 1; // sugeneruojam exam grade
 
-        Temp.avg = (Temp.exam + accumulate(Temp.HW.begin(), Temp.HW.end(), 0.00)) / (numND + 1);
+        Temp.exam = rand() % 10 + 1;
+        Temp.avg = (Temp.exam + accumulate(Temp.HW.begin(), Temp.HW.end(), 0.00)) / (numHW + 1);
         file << fixed << left << setprecision(2) << setw(10) << Temp.avg << endl;
 
         Vec1.push_back(Temp);
     }
-    cout << "printed" << endl;
 
     file.close();
 
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
-
-    // Output the elapsed time
-    std::cout << "Failo is " << numEntries << " nuskaitymo laikas: " << elapsed.count() << std::endl;
+    cout << "File with " << numEntries << " entries generated in: " << elapsed.count() << " seconds" << endl;
 }
 
-void filterstudents(const string &inputfile, const string &below5, const string &above5, vector<Stud> &Vec1) {
+void filterbelow5(const string &inputfile, vector<Stud> &below5) {
+    auto start = std::chrono::high_resolution_clock::now();
+
     ifstream file(inputfile);
-    ofstream nuskriaustukai(below5);
-    ofstream kietakai(above5);
 
     if (!file.is_open()) {
-        cerr << "Failed to open input file." << endl;
+        cerr << "Failed to open input file: " << inputfile << endl;
         return;
     }
 
     string line;
-    getline(file, line); // nuskaito headeri
+    getline(file, line); // skippina headeri
 
-    Vec1.clear();
+    below5.clear();
 
     while (getline(file, line)) {
-        istringstream inputline(line); // istringstream tinka visokiu tipo duomenim nuskaityt int, string ir tt
-
+        istringstream inputline(line); // istringstream naudojamas visokiu tipo duomenim nuskaityt
         Stud student;
         if (inputline >> student.name >> student.surname >> student.avg) {
-            Vec1.push_back(student);
-        }
-    }
-
-    for (const auto& student : Vec1) {
-        if (student.avg < 5.0) {
-            nuskriaustukai << fixed << left << setw(20) << student.name
-                            << setw(20) << student.surname
-                            << setw(10) << setprecision(2) << student.avg << endl;
-        } else {
-            kietakai << fixed << left << setw(20) << student.name
-                     << setw(20) << student.surname
-                     << setw(10) << setprecision(2) << student.avg << endl;
+            if (student.avg < 5.0) {
+                below5.push_back(student);
+            }
         }
     }
 
     file.close();
-    nuskriaustukai.close();
-    kietakai.close();
-    cout << "sorted" << endl;
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end - start;
+    cout << "Time it takes to read and filter students below 5 average: " << elapsed.count() << " seconds" << endl;
+}
+
+void filterabove5(const string &inputfile, vector<Stud> &above5) {
+    auto start = std::chrono::high_resolution_clock::now();
+
+    ifstream file(inputfile);
+
+    if (!file.is_open()) {
+        cerr << "Failed to open input file: " << inputfile << endl;
+        return;
+    }
+
+    string line;
+    getline(file, line); // skippina headeri
+
+    above5.clear();
+
+    while (getline(file, line)) {
+        istringstream inputline(line); // istringstream naudojamas visokiu tipo duomenim nuskaityt
+        Stud student;
+        if (inputline >> student.name >> student.surname >> student.avg) {
+            if (student.avg >= 5.0) {
+                above5.push_back(student);
+            }
+        }
+    }
+
+    file.close();
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end - start;
+    cout << "Time it takes to read and filter students above or equal to 5 average: " << elapsed.count() << " seconds" << endl;
+}
+
+void savetofile(const string &filename, const vector<Stud> &students) {
+    auto start = std::chrono::high_resolution_clock::now();
+
+    ofstream file(filename);
+
+    if (!file.is_open()) {
+        cerr << "Failed to open output file: " << filename << endl;
+        return;
+    }
+
+    for (const auto &student : students) {
+        file << fixed << left << setw(20) << student.name
+             << setw(20) << student.surname
+             << setw(10) << setprecision(2) << student.avg << endl;
+    }
+
+    file.close();
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end - start;
+    cout << "Time elapsed to print filtered students to files " << filename << ": " << elapsed.count() << " seconds" << endl;
 }

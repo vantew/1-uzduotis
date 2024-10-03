@@ -3,6 +3,7 @@
 
 int main() {
     vector<Stud> Vec1;
+
     Stud Temp;
 
     char fileoption;
@@ -61,27 +62,72 @@ int main() {
 //////////////////////////////////////////////////////////////////////
         cin >> generatefiles;
         if (generatefiles == 'y' || generatefiles == 'Y') {
-            int numND;
 
+            int numHW;
             cout << "Enter the number of homework grades: ";
-            cin >> numND;
+            cin >> numHW;
+            cout << endl;
 
-            filegeneration("studentai_1000.txt", 1000, numND, Vec1);
-            filterstudents("studentai_1000.txt", "nuskriaustukai_1000.txt", "kietakai_1000.txt", Vec1);
+        vector<Stud> below5;
+        vector<Stud> above5;
 
-            filegeneration("studentai_10000.txt", 10000, numND, Vec1);
-            filterstudents("studentai_10000.txt", "nuskriaustukai_10000.txt", "kietakai_10000.txt", Vec1);
+        auto start1000 = std::chrono::high_resolution_clock::now();
+        filegeneration("studentai_1000.txt", 1000, numHW, Vec1);
+        filterbelow5("studentai_1000.txt", below5);
+        filterabove5("studentai_1000.txt", above5);
+        savetofile("nuskriaustukai_1000.txt", below5);
+        savetofile("kietakai_1000.txt", above5);
+        auto end1000 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed1000 = end1000 - start1000;
+        cout << "Total time elapsed: " << elapsed1000.count() << " seconds" << endl;
+        cout << endl;
 
-            filegeneration("studentai_100000.txt", 100000, numND, Vec1);
-            filterstudents("studentai_100000.txt", "nuskriaustukai_100000.txt", "kietakai_100000.txt", Vec1);
+        auto start10000 = std::chrono::high_resolution_clock::now();
+        filegeneration("studentai_10000.txt", 10000, numHW, Vec1);
+        filterbelow5("studentai_10000.txt", below5);
+        filterabove5("studentai_10000.txt", above5);
+        savetofile("nuskriaustukai_10000.txt", below5);
+        savetofile("kietakai_10000.txt", above5);
+        auto end10000 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed10000 = end10000 - start10000;
+        cout << "Total time elapsed: " << elapsed10000.count() << " seconds" << endl;
+        cout << endl;
 
-            filegeneration("studentai_1000000.txt", 1000000, numND, Vec1);
-            filterstudents("studentai_1000000.txt", "nuskriaustukai_1000000.txt", "kietakai_1000000.txt", Vec1);
+        auto start100000 = std::chrono::high_resolution_clock::now();
+        filegeneration("studentai_100000.txt", 100000, numHW, Vec1);
+        filterbelow5("studentai_100000.txt", below5);
+        filterabove5("studentai_100000.txt", above5);
+        savetofile("nuskriaustukai_100000.txt", below5);
+        savetofile("kietakai_100000.txt", above5);
+        auto end100000 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed100000 = end100000 - start100000;
+        cout << "Total time elapsed: " << elapsed100000.count() << " seconds" << endl;
+        cout << endl;
 
-            filegeneration("studentai_10000000.txt", 10000000, numND, Vec1);
-            filterstudents("studentai_10000000.txt", "nuskriaustukai_1000000.txt", "kietakai_1000000.txt", Vec1);
+        auto start1000000 = std::chrono::high_resolution_clock::now();
+        filegeneration("studentai_1000000.txt", 1000000, numHW, Vec1);
+        filterbelow5("studentai_1000000.txt", below5);
+        filterabove5("studentai_1000000.txt", above5);
+        savetofile("nuskriaustukai_1000000.txt", below5);
+        savetofile("kietakai_1000000.txt", above5);
+        auto end1000000 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed1000000 = end1000000 - start1000000;
+        cout << "Total time elapsed: " << elapsed1000000.count() << " seconds" << endl;
+        cout << endl;
 
-    return 0;
+        auto start10000000 = std::chrono::high_resolution_clock::now();
+        filegeneration("studentai_10000000.txt", 10000000, numHW, Vec1);
+        filterbelow5("studentai_10000000.txt", below5);
+        filterabove5("studentai_10000000.txt", above5);
+        savetofile("nuskriaustukai_10000000.txt", below5);
+        savetofile("kietakai_10000000.txt", above5);
+        auto end10000000 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed10000000 = end10000000 - start10000000;
+        cout << "Total time elapsed: " << elapsed10000000.count() << " seconds" << endl;
+        cout << endl;
+
+        system("pause");
+        return 0;
 //////////////////////////////////////////////////////////////////////
 ///////////////// V0.2
 //////////////////////////////////////////////////////////////////////
