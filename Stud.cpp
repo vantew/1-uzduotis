@@ -227,7 +227,7 @@ void clean(Stud &Lok) {
 //////////////////////////////////////////////////////////////////////
 ///////////////// V0.2
 //////////////////////////////////////////////////////////////////////
-void filegeneration(const string &filename, int numEntries, int numHW, vector<Stud> &Vec1) {
+void filegeneration(const string& filename, int numEntries, int numHW, vector<Stud>& Vec1) {
     ofstream file(filename);
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -236,7 +236,7 @@ void filegeneration(const string &filename, int numEntries, int numHW, vector<St
         return;
     }
 
-    srand(static_cast<unsigned int>(time(0)));
+    srand(static_cast<unsigned int>(time(0))); // kaskart generatina skirtingus grades
 
     file << fixed << left << setw(15) << "Vardas"
                           << setw(15) << "Pavarde"
@@ -266,8 +266,26 @@ void filegeneration(const string &filename, int numEntries, int numHW, vector<St
     cout << "File with " << numEntries << " entries generated in: " << elapsed.count() << " seconds" << endl;
 }
 
-void filterbelow5(const string &inputfile, vector<Stud> &below5) {
-    auto start = std::chrono::high_resolution_clock::now();
+void filterandsave(char filteroption, const string& studentinput, const string& below5file, const string& above5file) {
+    vector<Stud> allstudents;
+    vector<Stud> filteredstudents;
+
+    readfile(studentinput, allstudents);
+
+    if (filteroption == '1') {
+        filterbelow5(allstudents, filteredstudents);
+        savetofile(above5file, filteredstudents);
+    } else if (filteroption == '2') {
+        filterabove5(allstudents, filteredstudents);
+        savetofile(below5file, filteredstudents);
+    } else {
+        cout << "Invalid option." << endl;
+        exit(1);
+    }
+}
+
+void readfile(const string &inputfile, vector<Stud> &allstudents) { // nuskaitomas failas su tam tikru kiekiu duomenu
+    auto start = std::chrono::high_resolution_clock::now();         // suskaiciuojamas laikas, kiek uztrunka nuskaityti sugeneruota faila
 
     ifstream file(inputfile);
 
@@ -278,60 +296,57 @@ void filterbelow5(const string &inputfile, vector<Stud> &below5) {
 
     string line;
     getline(file, line); // skippina headeri
+
+    allstudents.clear();
+
+    while (getline(file, line)) {
+        istringstream inputline(line);
+        Stud Temp;
+        if (inputline >> Temp.name >> Temp.surname >> Temp.avg) {
+            allstudents.push_back(Temp);
+        }
+    }
+
+    file.close();
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end - start;
+    cout << "Time it takes to read all students from the file: " << elapsed.count() << " seconds" << endl;
+}
+
+void filterbelow5(const vector<Stud> &allstudents, vector<Stud> &below5) { // isfiltruoja studentus, kuriu vidurkis < 5
+    auto start = std::chrono::high_resolution_clock::now();                // suskaiciuoja laika, kiek uztrunka isfiltruoti
 
     below5.clear();
 
-    while (getline(file, line)) {
-        istringstream inputline(line); // istringstream naudojamas visokiu tipo duomenim nuskaityt
-        Stud student;
-        if (inputline >> student.name >> student.surname >> student.avg) {
-            if (student.avg < 5.0) {
-                below5.push_back(student);
-            }
+    for (const auto &student : allstudents) {
+        if (student.avg < 5.0) {
+            below5.push_back(student);
         }
     }
 
-    file.close();
-
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
-    cout << "Time it takes to read and filter students below 5 average: " << elapsed.count() << " seconds" << endl;
+    cout << "Time it takes to filter students below 5 average: " << elapsed.count() << " seconds" << endl;
 }
 
-void filterabove5(const string &inputfile, vector<Stud> &above5) {
-    auto start = std::chrono::high_resolution_clock::now();
-
-    ifstream file(inputfile);
-
-    if (!file.is_open()) {
-        cerr << "Failed to open input file: " << inputfile << endl;
-        return;
-    }
-
-    string line;
-    getline(file, line); // skippina headeri
+void filterabove5(const vector<Stud> &allstudents, vector<Stud> &above5) { // isfiltruoja studentus, kuriu vidurkis < 5
+    auto start = std::chrono::high_resolution_clock::now();                // suskaiciuoja laika, kiek uztrunka isfiltruoti
 
     above5.clear();
-
-    while (getline(file, line)) {
-        istringstream inputline(line); // istringstream naudojamas visokiu tipo duomenim nuskaityt
-        Stud student;
-        if (inputline >> student.name >> student.surname >> student.avg) {
-            if (student.avg >= 5.0) {
-                above5.push_back(student);
-            }
+    for (const auto &student : allstudents) {
+        if (student.avg >= 5.0) {
+            above5.push_back(student);
         }
     }
 
-    file.close();
-
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
-    cout << "Time it takes to read and filter students above or equal to 5 average: " << elapsed.count() << " seconds" << endl;
+    cout << "Time it takes to filter students above or equal to 5 average: " << elapsed.count() << " seconds" << endl;
 }
 
-void savetofile(const string &filename, const vector<Stud> &students) {
-    auto start = std::chrono::high_resolution_clock::now();
+void savetofile(const string &filename, const vector<Stud> &students) { // issaugo isfiltruotus studentus i failus
+    auto start = std::chrono::high_resolution_clock::now();             // suskaiciuoja laika, kiek uztrunka juos issaugoti
 
     ofstream file(filename);
 
@@ -350,5 +365,5 @@ void savetofile(const string &filename, const vector<Stud> &students) {
 
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
-    cout << "Time elapsed to print filtered students to files " << filename << ": " << elapsed.count() << " seconds" << endl;
+    cout << "Time elapsed to print filtered students to file " << filename << ": " << elapsed.count() << " seconds" << endl;
 }

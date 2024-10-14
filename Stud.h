@@ -25,10 +25,11 @@ void printHeadermed();
 void printHeadernull();
 double calculateMedian(vector<double>& grades);
 void sortsurname(vector<Stud> &students);
-void filegeneration(const string &file, int numEntries, int numHW, vector<Stud> &Lok);
-void filterstudents(const string& inputfile, const string& below5, const string& above5, vector<Stud> &Vec1);
-void filterbelow5(const string &inputfile, vector<Stud> &below5);
-void filterabove5(const string &inputfile, vector<Stud> &above5);
-void savetofile(const string &filename, const vector<Stud> &students);
 
+void filegeneration(const string& filename, int numEntries, int numHW, vector<Stud>& Vec1);
+void filterandsave(char filteroption, const string& studentinput, const string& below5file, const string& above5file);
+void readfile(const string &inputfile, vector<Stud> &allstudents);
+void filterbelow5(const vector<Stud> &allstudents, vector<Stud> &below5);
+void filterabove5(const vector<Stud> &allstudents, vector<Stud> &above5);
+void savetofile(const string &filename, const vector<Stud> &students);
 #endif // STUD_H_INCLUDED
